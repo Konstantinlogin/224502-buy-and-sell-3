@@ -10,12 +10,11 @@ const {
   ExitCode
 } = require(`./constants`);
 
-const userArguments = process.argv.slice(USER_ARGV_INDEX);
-const [userCommand] = userArguments;
+const [command, ...args] = process.argv.slice(USER_ARGV_INDEX);
 
-if (userArguments.length === 0 || !Cli[userCommand]) {
+if (!command || !Cli[command]) {
   Cli[DEFAULT_COMMAND].run();
   process.exit(ExitCode.success);
 }
 
-Cli[userCommand].run(userArguments.slice(1));
+Cli[command].run(...args);

@@ -2,6 +2,16 @@
 
 const fs = require(`fs`);
 
+const {
+  getRandomInt,
+  shuffle,
+  getPictureFileName
+} = require(`../utils`);
+
+const {
+  ExitCode
+} = require('../constants');
+
 const DEFAULT_COUNT = 1;
 const FILE_NAME = `mocks.json`;
 
@@ -49,7 +59,6 @@ const OfferType = {
   sale: `sale`
 };
 
-
 const SumRestrict = {
   min: 1000,
   max: 100000
@@ -59,12 +68,6 @@ const PictureRestrict = {
   min: 1,
   max: 16
 };
-
-const {
-  getRandomInt,
-  shuffle,
-  getPictureFileName
-} = require(`../utils`);
 
 const generateOffers = (count) => (
   Array(count).fill({}).map(() => ({
@@ -79,15 +82,20 @@ const generateOffers = (count) => (
 
 module.exports = {
   name: `--generate`,
-  run(args) {
-    const [count] = args;
+  run(count) {
     const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
-    const content = JSON.stringify(generateOffers(countOffer));
+    let content = '';
+    try {
+      content = JSON.stringify(generateOffers(countOffer));
+    } catch (e) {
+      console.error(`Can't stringify an object...`, e);
+      process.exit(ExitCode.fail);
+    }
+
     fs.writeFile(FILE_NAME, content, (err) => {
       if (err) {
         return console.error(`Can't write data to file...`);
       }
-
       return console.info(`Operation success. File created.`);
     });
   }

@@ -1,7 +1,5 @@
 'use strict';
 
-const fs = require(`fs`);
-
 module.exports.getRandomInt = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
