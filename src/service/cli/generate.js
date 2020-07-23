@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require(`fs`);
+const chalk = require(`chalk`);
 
 const {
   getRandomInt,
@@ -88,15 +89,15 @@ module.exports = {
     try {
       content = JSON.stringify(generateOffers(countOffer));
     } catch (e) {
-      console.error(`Can't stringify an object...`, e);
+      console.error(chalk.red(`Can't stringify an object...`), chalk.red(e));
       process.exit(ExitCode.fail);
     }
 
     fs.writeFile(FILE_NAME, content, (err) => {
       if (err) {
-        return console.error(`Can't write data to file...`);
+        return console.error(chalk.red(`Can't write data to file...`));
       }
-      return console.info(`Operation success. File created.`);
+      return console.info(chalk.green(`Operation success. File created.`));
     });
   }
 }
