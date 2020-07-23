@@ -86,6 +86,10 @@ module.exports = {
   run(count) {
     const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
     let content = '';
+    if (count > 1000) {
+      console.error(chalk.red(`Не больше 1000 объявлений`));
+      process.exit(ExitCode.fail);
+    }
     try {
       content = JSON.stringify(generateOffers(countOffer));
     } catch (e) {
