@@ -59,8 +59,6 @@ const readContent = async (filePath) => {
 module.exports = {
   name: `--generate`,
   async run(count) {
-
-
     try {
       if (count > 1000) {
         throw new Error(`Не больше 1000 объявлений`)
