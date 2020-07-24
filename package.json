@@ -20,6 +20,10 @@
   "homepage": "https://github.com/Konstantinlogin/224502-buy-and-sell-3#readme",
   "devDependencies": {
     "eslint": "7.3.1",
-    "eslint-config-htmlacademy": "0.5.2"
+    "eslint-config-htmlacademy": "0.5.2",
+    "nodemon": "2.0.4"
+  },
+  "dependencies": {
+    "chalk": "4.1.0"
   }
 }

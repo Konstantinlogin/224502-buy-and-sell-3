@@ -1,6 +1,7 @@
 'use strict';
 
-const fs = require(`fs`);
+const fs = require(`fs`).promises;
+const chalk = require(`chalk`);
 
 const {
   getRandomInt,
@@ -82,21 +83,25 @@ const generateOffers = (count) => (
 
 module.exports = {
   name: `--generate`,
-  run(count) {
+  async run(count) {
     const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
-    let content = '';
-    try {
-      content = JSON.stringify(generateOffers(countOffer));
-    } catch (e) {
-      console.error(`Can't stringify an object...`, e);
+    if (count > 1000) {
+      console.error(chalk.red(`Не больше 1000 объявлений`));
       process.exit(ExitCode.fail);
     }
-
-    fs.writeFile(FILE_NAME, content, (err) => {
-      if (err) {
-        return console.error(`Can't write data to file...`);
-      }
-      return console.info(`Operation success. File created.`);
-    });
+    let content;
+    try {
+      content = JSON.stringify(generateOffers(countOffer))
+    } catch (e) {
+      console.error(chalk.red(`Can't stringify an object...`));
+      process.exit(ExitCode.fail);
+    }
+    try {
+      await fs.writeFile(FILE_NAME, content);
+      console.log(chalk.green(`Operation success. File created.`));
+    } catch (e) {
+      console.error(chalk.red(`Can't write data to file...`));
+      process.exit(ExitCode.fail);
+    }
   }
 }
