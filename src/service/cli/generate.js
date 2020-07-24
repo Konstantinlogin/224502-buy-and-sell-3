@@ -37,7 +37,7 @@ const PictureRestrict = {
 
 const generateOffers = (count, titles, categories, sentences) => (
   Array(count).fill({}).map(() => ({
-    category: [categories[getRandomInt(0, categories.length - 1)]],
+    category: shuffle(categories).slice(1, getRandomInt(2, 10)),
     description: shuffle(sentences).slice(1, 5).join(` `),
     picture: getPictureFileName(getRandomInt(PictureRestrict.min, PictureRestrict.max)),
     title: titles[getRandomInt(0, titles.length - 1)],
@@ -59,6 +59,8 @@ const readContent = async (filePath) => {
 module.exports = {
   name: `--generate`,
   async run(count) {
+
+
     try {
       if (count > 1000) {
         throw new Error(`Не больше 1000 объявлений`)
