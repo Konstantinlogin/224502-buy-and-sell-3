@@ -2,7 +2,7 @@
 
 const fs = require(`fs`).promises;
 const chalk = require(`chalk`);
-
+const path = require(`path`);
 const {
   getRandomInt,
   shuffle,
@@ -16,10 +16,9 @@ const {
 const DEFAULT_COUNT = 1;
 const FILE_NAME = `mocks.json`;
 
-const FILE_SENTENCES_PATH = `./data/sentences.txt`;
-const FILE_TITLES_PATH = `./data/titles.txt`;
-const FILE_CATEGORIES_PATH = `./data/categories.txt`;
-
+const FILE_SENTENCES_PATH = path.resolve(__dirname, `../../../data/sentences.txt`);
+const FILE_TITLES_PATH = path.resolve(__dirname, `../../../data/titles.txt`);
+const FILE_CATEGORIES_PATH = path.resolve(__dirname, `../../../data/categories.txt`);
 const OfferType = {
   offer: `offer`,
   sale: `sale`
