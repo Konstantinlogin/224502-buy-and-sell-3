@@ -1,3 +1,5 @@
+'use strict';
+
 const chalk = require(`chalk`);
 const http = require(`http`);
 const fs = require(`fs`).promises;
@@ -61,4 +63,4 @@ module.exports = {
         return console.info(chalk.green(`Ожидаю соединений на ${port}`));
       });
   }
-}
+};
