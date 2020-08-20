@@ -19,5 +19,5 @@ app.use(`/my`, routes.my);
 app.use(`/offers`, routes.offers);
 app.use(`/search`, routes.search);
 
-const port = 8081; //TODO: 8080 занят дженкинсом, поправить на 8080 перед пулл реквестом
+const port = 8080;
 app.listen(port);
