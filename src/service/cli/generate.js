@@ -11,7 +11,7 @@ const {
 
 const {
   ExitCode
-} = require('../constants');
+} = require(`../constants`);
 
 const DEFAULT_COUNT = 1;
 const FILE_NAME = `mocks.json`;
@@ -50,8 +50,7 @@ const readContent = async (filePath) => {
     const content = await fs.readFile(filePath, `utf8`);
     return content.split(`\n`);
   } catch (e) {
-    console.error(chalk.red(e));
-    process.exit(ExitCode.fail);
+    return [];
   }
 };
 
@@ -60,7 +59,7 @@ module.exports = {
   async run(count) {
     try {
       if (count > 1000) {
-        throw new Error(`Не больше 1000 объявлений`)
+        throw new Error(`Не больше 1000 объявлений`);
       }
       const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
       const sentences = await readContent(FILE_SENTENCES_PATH);
@@ -74,4 +73,4 @@ module.exports = {
       process.exit(ExitCode.fail);
     }
   }
-}
+};
