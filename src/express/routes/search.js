@@ -6,7 +6,9 @@ const {
 const search = new Router();
 
 search.get(`/`, (req, res) => {
-  res.render(`search/search-result`);
+  res.render(`search/search-result`, {
+    empty: false
+  });
 });
 
 module.exports = search;
