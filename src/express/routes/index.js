@@ -6,7 +6,9 @@ const {
 const index = new Router();
 
 index.get(`/`, (req, res) => {
-  res.render(`index/main`);
+  res.render(`index/main`, {
+    empty: false
+  });
 });
 
 module.exports = index;
