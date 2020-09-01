@@ -9,7 +9,9 @@ my.get(`/`, (req, res) => {
   res.render(`my/my-tickets`);
 });
 my.get(`/comments`, (req, res) => {
-  res.render(`my/comments`);
+  res.render(`my/comments`, {
+    empty: true
+  });
 });
 
 module.exports = my;
