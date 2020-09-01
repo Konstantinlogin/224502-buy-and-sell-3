@@ -7,7 +7,7 @@ const search = new Router();
 
 search.get(`/`, (req, res) => {
   res.render(`search/search-result`, {
-    empty: false
+    empty: true
   });
 });
 
