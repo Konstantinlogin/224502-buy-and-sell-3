@@ -29,12 +29,14 @@ app.use((req, res, next) => {
     bodyClass: `body-not-found`,
     htmlClass: `html-not-found`,
   });
+  next();
 });
-app.use((req, res, next) => {
+app.use((err, req, res, next) => {
   res.status(500).render(`errors/500`, {
     bodyClass: `html-server`,
     htmlClass: `body-server`,
   });
+  next();
 });
 
 const port = 8081;
