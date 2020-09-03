@@ -5,9 +5,21 @@ const {
 } = require(`express`);
 const offers = new Router();
 
-offers.get(`/category/:id`, (req, res) => res.send(`/offers/category/${req.params.id}`));
-offers.get(`/add`, (req, res) => res.send(`/offers/add`));
-offers.get(`/edit/:id`, (req, res) => res.send(`/offers/edit/${req.params.id}`));
-offers.get(`/:id`, (req, res) => res.send(`/offers/${req.params.id}`));
+offers.get(`/category/:id`, (req, res) => {
+  res.render(`offers/category`);
+});
+offers.get(`/add`, (req, res) => {
+  res.render(`offers/new-ticket`);
+});
+offers.get(`/edit/:id`, (req, res) => {
+  res.render(`offers/ticket-edit`);
+});
+offers.get(`/:id`, (req, res) => {
+  res.render(`offers/ticket`, {
+    guest: false,
+    noComment: false,
+    noImage: false
+  });
+});
 
 module.exports = offers;

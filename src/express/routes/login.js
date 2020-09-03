@@ -5,6 +5,8 @@ const {
 } = require(`express`);
 const login = new Router();
 
-login.get(`/`, (req, res) => res.send(`/login`));
+login.get(`/`, (req, res) => {
+  res.render(`auth/login`);
+});
 
 module.exports = login;

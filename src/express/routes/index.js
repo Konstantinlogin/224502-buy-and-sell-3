@@ -5,6 +5,10 @@ const {
 } = require(`express`);
 const index = new Router();
 
-index.get(`/`, (req, res) => res.send(`/`));
+index.get(`/`, (req, res) => {
+  res.render(`index/main`, {
+    empty: false
+  });
+});
 
 module.exports = index;
