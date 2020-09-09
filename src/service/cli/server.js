@@ -10,7 +10,6 @@ const DEFAULT_PORT = 3000;
 const app = express();
 app.use(express.json());
 
-
 const routes = {
   offers: require(`./routes/offers`)
 };
