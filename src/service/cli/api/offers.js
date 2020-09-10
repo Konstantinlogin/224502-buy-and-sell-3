@@ -1,14 +1,15 @@
 'use strict';
 
-const {
-  Router
-} = require(`express`);
 const fs = require(`fs`).promises;
 const {
   HttpCode
 } = require(`../../constants`);
+const {
+  createRouter,
+  getJsonError
+} = require(`../helpers`);
 
-const offers = new Router();
+const offers = createRouter();
 const FILENAME = `mocks.json`;
 
 offers.get(`/`, async (req, res) => {
@@ -17,7 +18,9 @@ offers.get(`/`, async (req, res) => {
     const mocks = JSON.parse(fileContent);
     res.json(mocks);
   } catch (err) {
-    res.status(HttpCode.INTERNAL_SERVER_ERROR).send(err);
+    res
+      .status(HttpCode.INTERNAL_SERVER_ERROR)
+      .json(getJsonError(HttpCode.INTERNAL_SERVER_ERROR, err));
   }
 });
 
