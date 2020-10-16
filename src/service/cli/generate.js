@@ -14,7 +14,8 @@ const {
 
 const {
   ExitCode,
-  MAX_ID_LENGTH
+  MAX_ID_LENGTH,
+  MAX_COMMENTS
 } = require(`../constants`);
 
 const DEFAULT_COUNT = 1;
@@ -23,6 +24,7 @@ const FILE_NAME = `mocks.json`;
 const FILE_SENTENCES_PATH = path.resolve(__dirname, `../../../data/sentences.txt`);
 const FILE_TITLES_PATH = path.resolve(__dirname, `../../../data/titles.txt`);
 const FILE_CATEGORIES_PATH = path.resolve(__dirname, `../../../data/categories.txt`);
+const FILE_COMMENTS_PATH = path.resolve(__dirname, `../../../data/comments.txt`);
 const OfferType = {
   offer: `offer`,
   sale: `sale`
@@ -38,7 +40,16 @@ const PictureRestrict = {
   max: 16
 };
 
-const generateOffers = (count, titles, categories, sentences) => (
+const generateComments = (count, comments) => (
+  Array(count).fill({}).map(() => ({
+    id: nanoid(MAX_ID_LENGTH),
+    text: shuffle(comments)
+      .slice(0, getRandomInt(1, 3))
+      .join(` `),
+  }))
+);
+
+const generateOffers = (count, titles, categories, sentences, comments) => (
   Array(count).fill({}).map(() => ({
     id: nanoid(MAX_ID_LENGTH),
     category: shuffle(categories).slice(1, getRandomInt(2, 10)),
@@ -47,6 +58,7 @@ const generateOffers = (count, titles, categories, sentences) => (
     title: titles[getRandomInt(0, titles.length - 1)],
     type: Object.keys(OfferType)[Math.floor(Math.random() * Object.keys(OfferType).length)],
     sum: getRandomInt(SumRestrict.min, SumRestrict.max),
+    comments: generateComments(getRandomInt(1, MAX_COMMENTS), comments)
   }))
 );
 
@@ -70,7 +82,8 @@ module.exports = {
       const sentences = await readContent(FILE_SENTENCES_PATH);
       const titles = await readContent(FILE_TITLES_PATH);
       const categories = await readContent(FILE_CATEGORIES_PATH);
-      const content = JSON.stringify(generateOffers(countOffer, titles, categories, sentences));
+      const comments = await readContent(FILE_COMMENTS_PATH);
+      const content = JSON.stringify(generateOffers(countOffer, titles, categories, sentences, comments));
       await fs.writeFile(FILE_NAME, content);
       console.log(chalk.green(`Operation success. File created.`));
     } catch (e) {
