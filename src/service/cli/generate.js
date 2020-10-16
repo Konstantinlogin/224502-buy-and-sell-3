@@ -4,13 +4,17 @@ const fs = require(`fs`).promises;
 const chalk = require(`chalk`);
 const path = require(`path`);
 const {
+  nanoid
+} = require(`nanoid`);
+const {
   getRandomInt,
   shuffle,
   getPictureFileName
 } = require(`../utils`);
 
 const {
-  ExitCode
+  ExitCode,
+  MAX_ID_LENGTH
 } = require(`../constants`);
 
 const DEFAULT_COUNT = 1;
@@ -36,6 +40,7 @@ const PictureRestrict = {
 
 const generateOffers = (count, titles, categories, sentences) => (
   Array(count).fill({}).map(() => ({
+    id: nanoid(MAX_ID_LENGTH),
     category: shuffle(categories).slice(1, getRandomInt(2, 10)),
     description: shuffle(sentences).slice(1, 5).join(` `),
     picture: getPictureFileName(getRandomInt(PictureRestrict.min, PictureRestrict.max)),
