@@ -4,6 +4,7 @@ const {
 const {
   HttpCode
 } = require(`../../constants`);
+const offerValidator = require(`../middlewares/offerValidator`);
 
 const route = createRouter();
 
@@ -22,6 +23,12 @@ module.exports = (app, offerService) => {
         .send(`Not found with ${offerId}`);
     }
     return res.status(HttpCode.OK)
+      .json(offer);
+  });
+  route.post(`/`, offerValidator, (req, res) => {
+    const offer = offerService.create(req.body);
+
+    return res.status(HttpCode.CREATED)
       .json(offer);
   });
 };

@@ -2,6 +2,10 @@ const {
   nanoid
 } = require(`nanoid`);
 
+const {
+  MAX_ID_LENGTH
+} = require(`../../constants`);
+
 class OffersService {
   constructor(offers) {
     this._offers = offers;

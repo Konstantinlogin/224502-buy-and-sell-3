@@ -1,0 +1,11 @@
+POST http://localhost:3000/offers HTTP/1.1
+content-type: application/json
+
+{
+    "category": "sample",
+    "description": "sample",
+    "picture": "sample",
+    "title": "sample",
+    "type": "sample",
+    "sum": "sample"
+}
