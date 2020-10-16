@@ -7,25 +7,16 @@ const {
 
 const getMockData = require(`./lib/getMockData`);
 
-
 const DEFAULT_PORT = 3000;
 
 const app = express();
 app.use(express.json());
-
-const routes = {
-  offers: require(`./api/offers`),
-};
 
 const CategoriesService = require(`./data-service/categories`);
 const OffersService = require(`./data-service/offers`);
 
 const categories = require(`./api/categories`);
 const offers = require(`./api/offers`);
-
-// const {
-//   getJsonError
-// } = require(`./helpers`);
 
 (async () => {
   const mockData = await getMockData();

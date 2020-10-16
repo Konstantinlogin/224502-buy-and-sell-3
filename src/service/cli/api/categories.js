@@ -9,7 +9,7 @@ const route = createRouter();
 
 module.exports = (app, service) => {
 
-  app.use(`/categories`, route);
+  app.use(`/api/categories`, route);
 
   route.get(`/`, (req, res) => {
     const categories = service.findAll();

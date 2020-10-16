@@ -10,7 +10,7 @@ const route = createRouter();
 
 module.exports = (app, offerService) => {
 
-  app.use(`/offers`, route);
+  app.use(`/api/offers`, route);
 
   route.get(`/:offerId`, (req, res) => {
     const {
