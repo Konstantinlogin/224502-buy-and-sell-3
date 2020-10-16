@@ -1,6 +1,5 @@
 'use strict';
 
-const fs = require(`fs`).promises;
 const {
   HttpCode
 } = require(`../../constants`);
@@ -10,18 +9,16 @@ const {
 } = require(`../helpers`);
 
 const offers = createRouter();
-const FILENAME = `mocks.json`;
+const getMockData = require(`../lib/getMockData`);
 
 offers.get(`/`, async (req, res) => {
-  try {
-    const fileContent = await fs.readFile(FILENAME);
-    const mocks = JSON.parse(fileContent);
-    res.json(mocks);
-  } catch (err) {
+  getMockData().then(function (result) {
+    res.json(result);
+  }).catch(function (error) {
     res
       .status(HttpCode.INTERNAL_SERVER_ERROR)
-      .json(getJsonError(HttpCode.INTERNAL_SERVER_ERROR, err));
-  }
+      .json(getJsonError(HttpCode.INTERNAL_SERVER_ERROR, error));
+  });
 });
 
 module.exports = offers;

@@ -11,7 +11,8 @@ const app = express();
 app.use(express.json());
 
 const routes = {
-  offers: require(`./api/offers`)
+  offers: require(`./api/offers`),
+  // categories: require(`./api/categories`)
 };
 
 const {
