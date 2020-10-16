@@ -1,24 +1,27 @@
-'use strict';
-
+const {
+  createRouter
+} = require(`../helpers`);
 const {
   HttpCode
 } = require(`../../constants`);
-const {
-  createRouter,
-  getJsonError
-} = require(`../helpers`);
 
-const offers = createRouter();
-const getMockData = require(`../lib/getMockData`);
+const route = createRouter();
 
-offers.get(`/`, async (req, res) => {
-  getMockData().then(function (result) {
-    res.json(result);
-  }).catch(function (error) {
-    res
-      .status(HttpCode.INTERNAL_SERVER_ERROR)
-      .json(getJsonError(HttpCode.INTERNAL_SERVER_ERROR, error));
+module.exports = (app, offerService) => {
+
+  app.use(`/offers`, route);
+
+  route.get(`/:offerId`, (req, res) => {
+    const {
+      offerId
+    } = req.params;
+    const offer = offerService.findOne(offerId);
+
+    if (!offer) {
+      return res.status(HttpCode.NOT_FOUND)
+        .send(`Not found with ${offerId}`);
+    }
+    return res.status(HttpCode.OK)
+      .json(offer);
   });
-});
-
-module.exports = offers;
+};

@@ -5,6 +5,9 @@ const {
   HttpCode
 } = require(`../constants`);
 
+const getMockData = require(`./lib/getMockData`);
+
+
 const DEFAULT_PORT = 3000;
 
 const app = express();
@@ -12,19 +15,23 @@ app.use(express.json());
 
 const routes = {
   offers: require(`./api/offers`),
-  // categories: require(`./api/categories`)
 };
 
-const {
-  getJsonError
-} = require(`./helpers`);
+const CategoriesService = require(`./data-service/categories`);
+const OffersService = require(`./data-service/offers`);
 
-app.use(`/offers`, routes.offers);
-app.use((req, res) => res
-  .status(HttpCode.NOT_FOUND)
-  .json(getJsonError(HttpCode.NOT_FOUND, {
-    message: `Not found`
-  })));
+const categories = require(`./api/categories`);
+const offers = require(`./api/offers`);
+
+// const {
+//   getJsonError
+// } = require(`./helpers`);
+
+(async () => {
+  const mockData = await getMockData();
+  categories(app, new CategoriesService(mockData));
+  offers(app, new OffersService(mockData));
+})();
 
 module.exports = {
   name: `--server`,
